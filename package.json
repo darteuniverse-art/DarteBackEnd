@@ -1,0 +1,33 @@
+{
+  "name": "darte-backend",
+  "version": "0.1.0",
+  "description": "Darte backend service (NestJS + MongoDB).",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "scripts": {
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "build": "nest build"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.3.10",
+    "@nestjs/config": "^3.2.2",
+    "@nestjs/core": "^10.3.10",
+    "@nestjs/mongoose": "^10.0.2",
+    "@nestjs/platform-express": "^10.3.10",
+    "mongoose": "^7.6.12",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.4.2",
+    "@nestjs/schematics": "^10.1.2",
+    "@nestjs/testing": "^10.3.10",
+    "@types/node": "^20.14.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
