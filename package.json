@@ -11,7 +11,9 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "build": "nest build",
-    "seed": "ts-node scripts/seed.ts"
+    "seed": "ts-node scripts/seed.ts",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.10",
@@ -21,6 +23,7 @@
     "@nestjs/platform-express": "^10.3.10",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "express": "^5.2.1",
     "mongoose": "^7.6.12",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
@@ -29,7 +32,11 @@
     "@nestjs/cli": "^10.4.2",
     "@nestjs/schematics": "^10.1.2",
     "@nestjs/testing": "^10.3.10",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.14.10",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }

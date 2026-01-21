@@ -24,5 +24,9 @@ Seed an admin user:
 Add timestamped scripts under `scripts/migrations/` and run them with:
 - `pnpm ts-node scripts/migrations/<timestamp>_<name>.ts`
 
+## Tests
+- `pnpm test`
+- `pnpm test:watch`
+
 ## Health Check
 - `GET /health`
