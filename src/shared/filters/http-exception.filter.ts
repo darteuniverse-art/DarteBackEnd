@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { ErrorCode } from '../errors/error-codes';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -19,18 +20,41 @@ export class HttpExceptionFilter implements ExceptionFilter {
       ? exception.getStatus()
       : HttpStatus.INTERNAL_SERVER_ERROR;
     const responseBody = isHttpException ? exception.getResponse() : null;
+    const normalized =
+      typeof responseBody === 'string' ? { message: responseBody } : responseBody;
 
     const message =
-      typeof responseBody === 'string'
-        ? responseBody
-        : (responseBody as { message?: string })?.message ??
-          'Internal server error';
+      (normalized as { message?: string })?.message ?? 'Internal server error';
+    const details = (normalized as { details?: unknown })?.details;
+    const errorCode =
+      (normalized as { errorCode?: string })?.errorCode ?? mapStatusToErrorCode(status);
 
     response.status(status).json({
       statusCode: status,
+      errorCode,
       path: request.url,
       timestamp: new Date().toISOString(),
       message,
+      details,
     });
+  }
+}
+
+function mapStatusToErrorCode(status: number): ErrorCode {
+  switch (status) {
+    case HttpStatus.BAD_REQUEST:
+      return ErrorCode.BadRequest;
+    case HttpStatus.UNAUTHORIZED:
+      return ErrorCode.Unauthorized;
+    case HttpStatus.FORBIDDEN:
+      return ErrorCode.Forbidden;
+    case HttpStatus.NOT_FOUND:
+      return ErrorCode.NotFound;
+    case HttpStatus.CONFLICT:
+      return ErrorCode.Conflict;
+    case HttpStatus.TOO_MANY_REQUESTS:
+      return ErrorCode.RateLimited;
+    default:
+      return ErrorCode.InternalServerError;
   }
 }
