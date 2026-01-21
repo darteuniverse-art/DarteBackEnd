@@ -10,7 +10,8 @@
   "scripts": {
     "start": "nest start",
     "start:dev": "nest start --watch",
-    "build": "nest build"
+    "build": "nest build",
+    "seed": "ts-node scripts/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.10",
