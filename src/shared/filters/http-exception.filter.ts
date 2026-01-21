@@ -7,6 +7,8 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ErrorCode } from '../errors/error-codes';
+import { ApiResponse } from '../interfaces/api-response';
+import { ApiMeta } from '../interfaces/api-response';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -29,14 +31,23 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const errorCode =
       (normalized as { errorCode?: string })?.errorCode ?? mapStatusToErrorCode(status);
 
-    response.status(status).json({
+    const meta: ApiMeta = {
       statusCode: status,
-      errorCode,
       path: request.url,
       timestamp: new Date().toISOString(),
-      message,
-      details,
-    });
+    };
+
+    const payload: ApiResponse<null> = {
+      success: false,
+      error: {
+        code: errorCode,
+        message,
+        details,
+      },
+      meta,
+    };
+
+    response.status(status).json(payload);
   }
 }
 
